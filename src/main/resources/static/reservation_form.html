@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>新規予約</title>
+  <link rel="stylesheet" href="/css/reservation_form.css">
+  <script src="/js/reservation_form.js" defer></script>
+</head>
+<body>
+
+  <nav>
+    <ul>
+      <li><a href="index.html">トップページ</a></li>
+      <li><a href="reservations.html">予約一覧</a></li>
+    </ul>
+  </nav>
+
+  <h1>新規予約</h1>
+
+  <form id="reservation-form">
+    <label for="user">ユーザー:</label>
+    <select id="user" name="userId" required>
+      <option value="">選択してください</option>
+    </select>
+
+    <label for="travelPlan">旅行プラン:</label>
+    <select id="travelPlan" name="travelPlanId" required>
+      <option value="">選択してください</option>
+    </select>
+
+    <label for="reservedDate">予約日:</label>
+    <input type="date" id="reservedDate" name="reservedDate" required>
+
+    <label for="paymentStatus">支払い状況:</label>
+    <select id="paymentStatus" name="paymentStatus" required>
+      <option value="PENDING">未払い</option>
+      <option value="PAID">支払い済み</option>
+      <option value="CANCELLED">キャンセル</option>
+    </select>
+
+    <button type="submit">予約する</button>
+  </form>
+
+  <p id="message"></p>
+
+</body>
+</html>
