@@ -57,7 +57,7 @@
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
-			<version>8.2.0</version> <!-- 明示的にバージョン指定 -->
+			<!--<version>8.2.0</version>--> <!-- 明示的にバージョン指定 -->
 			<scope>runtime</scope>
 		</dependency>
 
