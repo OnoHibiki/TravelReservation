@@ -14,8 +14,7 @@ document.addEventListener("DOMContentLoaded", async function () {
               planDiv.innerHTML = `
                   <h3>${plan.tourName}</h3>
                   <p><strong>行き先:</strong> ${plan.destination}</p>
-                  <p><strong>価格:</strong> ${plan.price} 円</p>
-                  <p><strong>出発日:</strong> ${plan.departureDate} ～ ${plan.returnDate}</p>
+                  <p><strong>価格:</strong> ${plan.price} 円</p> 
                   <p>${plan.description}</p>
               `;
               plansContainer.appendChild(planDiv);

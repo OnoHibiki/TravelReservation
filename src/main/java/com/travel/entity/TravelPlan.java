@@ -12,7 +12,7 @@ public class TravelPlan{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @Column(name = "tour_name" ,nullable = false)
     private String tourName;
 
     private String hotel;

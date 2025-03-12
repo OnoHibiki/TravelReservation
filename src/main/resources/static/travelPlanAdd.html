@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>旅行プラン追加</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        async function addTravelPlan() {
+            const travelPlanData = {
+                tourName: document.getElementById("tour_name").value, 
+                hotel: document.getElementById("hotel").value,
+                destination: document.getElementById("destination").value,
+                price: parseInt(document.getElementById("price").value, 10) || 0, // 🛠️ 数値変換の安全対策
+                description: document.getElementById("description").value,
+                departureDate: document.getElementById("departure_date").value, // ✨ 出発日
+                returnDate: document.getElementById("return_date").value // ✨ 帰着日
+            };
+
+            try {
+                const response = await fetch("/travel-plans", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(travelPlanData)
+                });
+
+                if (response.ok) {
+                    alert("プラン追加成功！");
+                    await fetchTravelPlans(); // 🔹 登録後に旅行プラン一覧を更新
+                    document.getElementById("tour_name").value = "";
+                    document.getElementById("hotel").value = "";
+                    document.getElementById("destination").value = "";
+                    document.getElementById("price").value = "";
+                    document.getElementById("description").value = "";
+                    document.getElementById("departure_date").value = "";
+                    document.getElementById("return_date").value = "";
+                } else {
+                    const errorData = await response.json(); // 🛠️ エラーの詳細を取得
+                    alert("追加失敗: " + (errorData.message || "原因不明のエラー"));
+                    console.error("サーバーエラー:", errorData);
+                }
+            } catch (error) {
+                alert("通信エラーが発生しました");
+                console.error("通信エラー:", error);
+            }
+        }
+
+        // 旅行プラン一覧取得処理
+        async function fetchTravelPlans() {
+            const planList = document.getElementById("planList");
+            planList.innerHTML = "<p>旅行プランを取得中...</p>"; // ローディング表示
+
+            try {
+                const response = await fetch("/travel-plans");
+                const plans = await response.json();
+
+                planList.innerHTML = ""; // 既存のリストをクリア
+                plans.forEach(plan => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `プラン名: ${plan.tourName} - 料金: ${plan.price} 円`;
+                    planList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error("旅行プラン一覧の取得に失敗しました:", error);
+                planList.innerHTML = "<p>旅行プランの取得に失敗しました。</p>";
+            }
+        }
+
+        // ページ読み込み時に旅行プラン一覧を取得
+        document.addEventListener("DOMContentLoaded", fetchTravelPlans);
+    </script>
+</head>
+<body>
+    <h1>旅行プラン追加</h1>
+    
+    <label for="tour_name">ツアー名</label><br>
+    <input type="text" id="tour_name" placeholder="ツアー名" required><br><br>
+    
+    <!-- ホテル -->
+    <label for="hotel">ホテル</label><br>
+    <input type="text" id="hotel" placeholder="ホテル名"><br><br>
+    
+    <!-- 目的地 -->
+    <label for="destination">目的地</label><br>
+    <input type="text" id="destination" placeholder="目的地"><br><br>
+    
+    <!-- 料金 -->
+    <label for="price">料金</label><br>
+    <input type="number" id="price" placeholder="料金"><br><br>
+
+    <!-- 出発日 まだうまくいかない
+    <label for="departure_date">出発日</label><br>
+    <input type="date" id="departure_date" required><br><br> 
+    -->
+    <!-- 帰着日 まだうまくいかない
+    <label for="return_date">帰着日</label><br>
+    <input type="date" id="return_date" required><br><br>
+    -->
+
+    <!-- 説明 -->
+    <label for="description">説明</label><br>
+    <textarea id="description" placeholder="説明" rows="4" cols="50"></textarea><br><br>
+    
+    <button onclick="addTravelPlan()">追加</button>
+    <a href="index.html">TOPへ戻る</a>
+
+    <h2>登録済み旅行プラン一覧</h2>
+    <ul id="planList">
+        <p>旅行プランを取得中...</p>
+    </ul>
+</body>
+</html>

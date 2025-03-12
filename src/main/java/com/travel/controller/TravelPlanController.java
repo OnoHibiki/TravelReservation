@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/travel-plans")
@@ -30,7 +31,20 @@ public class TravelPlanController {
 
     //旅行プラン登録
     @PostMapping
-    public TravelPlan saveTravelPlan(@RequestBody TravelPlan travelPlan){
+    public TravelPlan saveTravelPlan(@RequestBody Map<String, Object> request) {
+        String tourName = (String) request.get("tourName"); // ✅ Java側でも `tourName` に変更
+        String hotel = (String) request.get("hotel");
+        String destination = (String) request.get("destination");
+        Integer price = ((Number) request.get("price")).intValue();
+        String description = (String) request.get("description");
+    
+        TravelPlan travelPlan = new TravelPlan();
+        travelPlan.setTourName(tourName);
+        travelPlan.setHotel(hotel);
+        travelPlan.setDestination(destination);
+        travelPlan.setPrice(price);
+        travelPlan.setDescription(description);
+    
         return travelPlanService.saveTravelPlan(travelPlan);
     }
 

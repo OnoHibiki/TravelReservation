@@ -34,11 +34,6 @@ public class UserController {
         return userService.saveUser(user);
     }
 
-    //ユーザー削除
-    @DeleteMapping("/{id}")
-        public void deleteUser(@PathVariable Integer id){
-            userService.deleteUser(id);
-        }
     
     @GetMapping("/")
         public String test() {

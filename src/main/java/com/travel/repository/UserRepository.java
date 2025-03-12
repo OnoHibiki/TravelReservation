@@ -13,8 +13,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    
     //ユーザーをmailアドレスで検索するメソッド
     User findByEmail(String email);
+
 
 }

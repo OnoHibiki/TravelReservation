@@ -16,10 +16,10 @@ public class User{
     @Column(nullable = false, unique = true)//nullを許さず値の重複も許さない
     private String email ;//mail address
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password ;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String role ;
 
     // Getters and Setters

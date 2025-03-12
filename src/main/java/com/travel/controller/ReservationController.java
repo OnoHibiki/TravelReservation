@@ -40,7 +40,7 @@ public class ReservationController {
         return reservationService.getReservationById(id);
     }
 
-    // 予約登録（修正済み）
+    // 予約登録
     @PostMapping
     public Reservation saveReservation(@RequestBody Map<String, Object> request) {
         try {

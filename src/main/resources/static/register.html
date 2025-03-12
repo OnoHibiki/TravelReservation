@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css">
+    <title>新規顧客登録</title>
+    <script>
+        // ユーザー登録処理
+        async function registerUser() {
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const role = document.getElementById("role").value;
+            
+            const response = await fetch("/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, email, password, role })
+            });
+            if (response.ok) {
+                alert("登録成功！");
+                await fetchUsers(); // 🔹 新しいユーザーリストを取得
+                document.getElementById("name").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("password").value = "";
+                document.getElementById("role").value = "顧客";
+            } else {
+                alert("登録失敗...");
+            }
+        }
+
+        // ユーザー一覧取得処理
+        async function fetchUsers() {
+            const userList = document.getElementById("userList");
+            userList.innerHTML = "<p>ユーザー情報を取得中...</p>"; // ローディング表示
+
+            try {
+                const response = await fetch("/users");
+                const users = await response.json();
+
+                userList.innerHTML = ""; // 既存のリストをクリア
+                users.forEach(user => {
+                    const listItem = document.createElement("li");
+                    listItem.textContent = `ID: ${user.id}, 名前: ${user.name}, メール: ${user.email}`;
+                    userList.appendChild(listItem);
+                });
+            } catch (error) {
+                console.error("ユーザー一覧の取得に失敗しました:", error);
+                userList.innerHTML = "<p>ユーザー情報の取得に失敗しました。</p>";
+            }
+        }
+
+        // ページ読み込み時にユーザー一覧を取得
+        document.addEventListener("DOMContentLoaded", fetchUsers);
+    </script>
+</head>
+<body>
+    <h1>ユーザー登録</h1>
+    <input type="text" id="name" placeholder="ユーザー名" required><br><br>
+    <input type="email" id="email" placeholder="メールアドレス" required><br><br>
+    <input type="password" id="password" placeholder="パスワード"><br><br>
+    
+    <label for="role">役割:</label>
+    <select id="role" required>
+        <option value="顧客">user</option>
+        <option value="従業員">admin</option>
+    </select><br><br>
+
+    <button onclick="registerUser()">登録</button>
+    <a href="index.html">TOPへ戻る</a>
+
+    <h2>登録済みユーザー一覧</h2>
+    <ul id="userList">
+        <p>ユーザー情報を取得中...</p>
+    </ul>
+</body>
+</html>
