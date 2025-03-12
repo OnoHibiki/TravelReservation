@@ -10,10 +10,10 @@
                 tourName: document.getElementById("tour_name").value, 
                 hotel: document.getElementById("hotel").value,
                 destination: document.getElementById("destination").value,
-                price: parseInt(document.getElementById("price").value, 10) || 0, // 🛠️ 数値変換の安全対策
+                price: parseInt(document.getElementById("price").value, 10) || 0,
                 description: document.getElementById("description").value,
-                departureDate: document.getElementById("departure_date").value, // ✨ 出発日
-                returnDate: document.getElementById("return_date").value // ✨ 帰着日
+                departureDate: document.getElementById("departure_date").value, 
+                returnDate: document.getElementById("return_date").value 
             };
 
             try {
@@ -25,7 +25,7 @@
 
                 if (response.ok) {
                     alert("プラン追加成功！");
-                    await fetchTravelPlans(); // 🔹 登録後に旅行プラン一覧を更新
+                    await fetchTravelPlans(); 
                     document.getElementById("tour_name").value = "";
                     document.getElementById("hotel").value = "";
                     document.getElementById("destination").value = "";
@@ -34,7 +34,7 @@
                     document.getElementById("departure_date").value = "";
                     document.getElementById("return_date").value = "";
                 } else {
-                    const errorData = await response.json(); // 🛠️ エラーの詳細を取得
+                    const errorData = await response.json(); 
                     alert("追加失敗: " + (errorData.message || "原因不明のエラー"));
                     console.error("サーバーエラー:", errorData);
                 }
@@ -47,7 +47,7 @@
         // 旅行プラン一覧取得処理
         async function fetchTravelPlans() {
             const planList = document.getElementById("planList");
-            planList.innerHTML = "<p>旅行プランを取得中...</p>"; // ローディング表示
+            planList.innerHTML = "<p>旅行プランを取得中...</p>"; 
 
             try {
                 const response = await fetch("/travel-plans");
