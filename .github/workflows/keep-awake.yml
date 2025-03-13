@@ -1,0 +1,12 @@
+name: Keep Render App Awake
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"  # 10分ごとに実行
+
+jobs:
+  keep-awake:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send request
+        run: curl -s https://your-app.onrender.com > /dev/null
